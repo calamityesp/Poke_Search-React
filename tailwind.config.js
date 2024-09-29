@@ -15,6 +15,9 @@ export default {
       "bubble-gum": "#ff77e9",
       bermuda: "#78dcca",
       error: "#E74C3C",
+      grey: {
+        100: "#242424"
+      }
     },
     extend: {
       backgroundImage: {

@@ -72,6 +72,12 @@ const CardPage = () => {
     setAltAvailable(false);
   };
 
+
+  /*
+    This is maybe more of a "how i expect" the page to work- but when i type a bad pokemon name i expect the old one to go
+    away and the "did you mean" to show up instead of adding it to display with the current pokemon. Kind of personal preference on that one
+
+   */
   return (
     <>
       {pokemon === "" ? (
