@@ -10,8 +10,13 @@ const CardPage = () => {
   const [pokemon, setPokemon] = useState<string>("");
   const [pokeImage, setPokeImage] = useState<string>("");
   const [pokeSearch, setPokeSearch] = useState<string>("");
+  //im a BIG fan of descriptive variable names, "altAvailable" doesn't work here. Im guessing that "alt" is supposed to be
+  // like alternate search e.g. user types "evee" the alt would be set to "eevee" however, in web development we have a thing
+  // on images called an "alt" text, to be having a variable called altAvailable sounds like you are search for an alt text
+  //for images, which is what i thought for the first bit when looking at this code. something like "didYouMeanString" might be better
   const [altAvailable, setAltAvailable] = useState<bool>(false);//bool isn't a thing in typescript, try boolean :p
-  const [altSearch, setAltSearch] = useState<string>("");
+  const [altSearch, setAltSearch] = useState<string>("");//also, if i am right about the above, why use two variables for this? just check to see if the alt text length is zero or not something like that, might be better?
+
 
   const list = async () => {
     const pokelist = await fetchAllPokemonNames();
@@ -19,9 +24,9 @@ const CardPage = () => {
   };
 
   const handlePokemonSearch = async (event: React.FormEvent) => {
-    event.preventDefault()
+    event.preventDefault();//prevent default blocks the page refresh
     const data = await fetchPokemon(pokeSearch);
-    const currentPokemonList: string[] = await list();
+    const currentPokemonList: string[] = await list();//why not just await fetchAllPokemonNames?
     const altSearchValue = didYouMean(pokeSearch, currentPokemonList);
     //might also set the pokemon to empty once you search
     setPokeSearch("");
@@ -31,7 +36,7 @@ const CardPage = () => {
     if (undefined === data) {//this logic seems really hacky and confusing and causes problems later
       if (null !== altSearchValue) {
         setAltAvailable(true);
-        setAltSearch(altSearchValue);
+        setAltSearch(altSearchValue);//again here we could just have the altSearch and scrap the alt available, if they HAVE to always be bound anyway why have two vars for it
       } else {
         setAltAvailable(true);
       }
@@ -39,7 +44,7 @@ const CardPage = () => {
       setAltAvailable(false);
     }
     //get pokemon image
-    const image = data["sprites"]["other"]["dream_world"]["front_default"];
+    const image = data["sprites"]["other"]["dream_world"]["front_default"];//i explain this issue later
     setPokeImage(image);
     setPokemon(data["name"]);
   };
@@ -56,7 +61,9 @@ const CardPage = () => {
       we are calling this on button click anyway:p
        */
 
-      handlePokemonSearch();
+      //red line warning is because i added an event object
+      handlePokemonSearch();//no need to call search when the page loads, why search if the user hasn't typed anything yet? or why search on altAvailable rather than when the
+      //user clicks the button if they have to do that anyway?
     }
   }, [altAvailable]);
 

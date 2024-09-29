@@ -1,0 +1,1 @@
+- it might be a better user experience if pressing enter on the input sends a search as well as the button
